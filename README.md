@@ -1,6 +1,7 @@
 # Web Server-based Smart Attendance System with ZFM20/AS608
 ## About
 ![image](https://github.com/alexandermaxim8/-Smart-Attendance-System/assets/143409662/0d12b55c-d5ad-4844-98ab-780fbe38b7b9)
+
 In general, this attendance system uses a fingerprint sensor combined with SD Card to store name data to identify people which then will be send online to a google sheet to perform data logging.
 
 ## Components and Architecture
