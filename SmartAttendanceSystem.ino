@@ -21,8 +21,8 @@ GSheet32 Sheet("AKfycbyUwB69dxeQmiLGtV3X1BxPAqJlTb6OWWHlKHOQxAAoMUI4mRDcnCWe4wPX
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
-const char* ssid       = "Galaxy A512844";
-const char* password   = "12341234";
+const char* ssid       = "314";
+const char* password   = "1020304050";
 
 const char* ntpServer1 = "pool.ntp.org";
 const char* ntpServer2 = "time.nist.gov";
@@ -175,6 +175,7 @@ uint8_t readnumber(void) {
     while (! Serial.available());
     num = Serial.parseInt();
   }
+  Serial.read();
   return num;
 }
 
@@ -408,9 +409,13 @@ uint8_t getFingerprintEnroll() {
     lcd.setCursor(0,1);
     lcd.print("(via IDE)");
     Serial.println("Input your name: ");
+    Serial.print(Serial.available());
+    delay(1000);
     while(Serial.available() == 0){
+      delay(50);
     }
-    name[id-1] = Serial.readString();
+    name[id-1] = Serial.readStringUntil('\n');
+
     Serial.print(id); Serial.print(" ");
     Serial.print(name[id-1]); Serial.println(" Stored!");
     lcd.clear();
@@ -504,6 +509,7 @@ uint8_t getFingerprintID() {
   p = finger.fingerSearch();
   if (p == FINGERPRINT_OK) {
     Serial.println("Found a print match!");
+    Serial.println(name[finger.fingerID-1]);
     sendtoSheet(name[finger.fingerID-1], finger.fingerID, finger.confidence);
     lcd.clear();
     lcd.setCursor(0,0);
@@ -533,7 +539,7 @@ uint8_t getFingerprintID() {
   
   while(digitalRead(button1) == LOW){
       Serial.print("Found ID #"); Serial.print(finger.fingerID);
-      Serial.print(" "); Serial.print(name[finger.fingerID-1]);
+      Serial.print(" "); Serial.print(name[finger.fingerID]);
       Serial.print(" with confidence of "); Serial.println(finger.confidence);
       lcd.setCursor(0,0);
       lcd.print("Button 1");
@@ -664,6 +670,7 @@ void readFromLine(fs::FS &fs, const char * path, size_t lineNumber, String name[
         String line = file.readStringUntil('\n');
         if(currentLine == lineNumber){
             name[lineNumber-1]=line;
+            Serial.println(name[lineNumber-1]);
             break;
         }
         currentLine++;
