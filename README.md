@@ -11,6 +11,8 @@ In general, this attendance system uses a fingerprint sensor combined with SD Ca
 - LCD 16x2
 - SD Card Adapter Module
 - Active Buzzer
+- Push Button
+- 10K Resistor
 
 ## Operation
 ![image](https://github.com/alexandermaxim8/-Smart-Attendance-System/assets/143409662/dba1498a-425c-468e-b2c8-99c55484b681)
